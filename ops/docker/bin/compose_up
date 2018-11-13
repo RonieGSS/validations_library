@@ -1,0 +1,50 @@
+#! /bin/bash
+cd `dirname $0`/../../../
+color='\033[0;96m'
+colorEnd='\033[0m'
+
+if [[ "$(uname)" == 'Linux' ]];
+then
+    color='\e[1;36m'
+    colorEnd='\e[0m'
+fi
+containerNames=("hxhronie_php" "hxhronie_phpmyadmin" "hxhronie_mysql")
+volumeName='docker_mysql_validations_data'
+
+for containerName in ${containerNames[*]}
+do
+	if [[ $(docker ps -aq -f name=$containerName) ]];
+	then
+		echo "Stopping ${containerName} container..."
+		docker stop $containerName
+		echo "Deleting ${containerName} container..."
+		docker rm $containerName
+	fi
+done
+
+if [[ $(docker volume ls | grep $volumeName) ]];
+then
+	echo "Deleting container volume..."
+	docker volume rm $volumeName
+fi
+
+# build php image
+bash ops/docker/bin/build_image
+docker-compose -f ops/docker/docker-compose.yml up --build -d
+
+source ./ops/docker/bin/is_site_ready
+# Check if site is ready meaning it shows apache2 logs
+isSiteReady 'hxhronie_php' 'apache2'
+
+echo -e "${color}
+	  ==========================================
+	   Open PHP on  http://localhost:9977
+	  ==========================================
+	   Open PHPmyadmin on http://localhost:7722
+	  ------------------------------------------
+	   PHPmyadmin Credentials:
+	   		Username -> root
+	   		Password -> test
+	  ==========================================
+	 "
+echo -e "${colorEnd}"

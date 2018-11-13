@@ -1,0 +1,20 @@
+{
+    "name": "hxhroniegss/php",
+    "description": "Final Examination for Applicants",
+    "authors": [
+        {
+            "name": "Ronie Vincent Horca",
+            "email": "ronievincent.gss@gmail.com"
+        }
+    ],
+    "require": {
+    	"monolog/monolog": "1.0.*",
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"App\\": "app/",
+    		"Lib\\": "lib/"
+    	}
+    }
+}

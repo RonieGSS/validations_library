@@ -1,0 +1,19 @@
+#! /bin/bash
+
+containerNames=("hxhronie_cakephp" "hxhronie_phpmyadmin" "hxhronie_mysql")
+
+for containerName in ${containerNames[*]}
+do
+	if [[ $(docker ps -f name=$containerName | grep $containerName -o) ]];
+	then
+		echo "
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+		${containerName} logs ...
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+		"
+		# Show container logs
+		docker logs --tail -f $containerName
+	else
+		echo "${containerName} not running!"
+	fi
+done

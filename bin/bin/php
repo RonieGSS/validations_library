@@ -1,0 +1,46 @@
+#! /bin/bash
+echo '
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+                   PHP Commands
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ Select from the following set of commands:
+
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+                   DESCRIPTIONS
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+1) Docker compose => Build and run all containers
+2) Docker build   => Build php image
+3) Docker logs    => Show container logs
+4) Back           => Return to bin/gss panel
+5) Quit           => Close the panel
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+'
+PS3='Please enter the number of your choice: '
+php=("Docker compose" "Docker build" "Docker logs" "Back" "Quit")
+cd `dirname $0`/../../
+select opt in "${php[@]}"
+do
+    case $opt in
+        "Docker compose")
+            bash ops/docker/bin/compose_up
+            break
+            ;;
+        "Docker build")
+            bash ops/docker/bin/build_image
+            break
+            ;;
+        "Docker logs")
+            bash ops/docker/bin/logs
+            break
+            ;;
+        "Back")
+            bash bin/gss
+            break
+            ;;
+        "Quit")
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done

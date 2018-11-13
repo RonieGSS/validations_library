@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+#################################################
+# title:   PHP Web Application
+# author:  Ronie Vincent Horca
+# contact: <ronievincent.gss@gmail.com>
+#################################################
+
+ php:
+   image: hxhroniegss/php
+   container_name: hxhronie_php
+   ports:
+     - "9978:80"
+   depends_on:
+     - mysql
+   volumes:
+     - "../../src:/var/www/html/"
+   environment:
+     - MYSQL_URL=mysql
+     - MYSQL_USERNAME=root
+     - MYSQL_PASSWORD=test
+ mysql:
+   image: mysql:5.7.22
+   container_name: hxhronie_mysql
+   volumes:
+     - mysql_php_data:/var/lib/mysql
+   environment:
+     - MYSQL_ROOT_PASSWORD=test
+     - MYSQL_DATABASE=validations
+
+#################################################
+# phpmyadmin credentials
+#################################################
+# server => phpmyadmin_mysql
+# user => root
+# password => test
+# remember to import the database tables
+# to use your app
+
+ phpmyadmin:
+   image: phpmyadmin/phpmyadmin:4.7
+   container_name: hxhronie_phpmyadmin
+   links:
+     - mysql:db
+   depends_on: 
+     - mysql
+   ports:
+     - "7723:80"
+   environment:
+     - PMA_HOST=mysql
+     - PMA_PORT=3306
+volumes:
+   mysql_php_data:
+

@@ -1,0 +1,44 @@
+#! /bin/bash
+PS3='Please enter the number of your choice: '
+color='\033[0;96m'
+colorEnd='\033[0m'
+
+if [[ "$(uname)" == 'Linux' ]];
+then
+    color='\e[1;36m'
+    colorEnd='\e[0m'
+fi
+
+options[0]="PHP"
+options[1]="Quit"
+
+cd `dirname $0`/../
+echo -e "${color}
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+            Global Synergy Solutions
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ Select from the following set of commands:
+
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+                   DESCRIPTIONS
+- - - - - - - - - - - - - - - - - - - - - - - - - -
+1) PHP         => Show all PHP docker commands
+2) Quit        => Close the panel
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+"
+select opt in "${options[@]}"
+do
+    case $opt in
+        "PHP")
+            bash bin/bin/php
+            break
+            ;; 
+        "Quit")
+            break
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
+
+echo -e "${colorEnd}"
