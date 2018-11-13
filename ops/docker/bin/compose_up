@@ -38,9 +38,9 @@ isSiteReady 'hxhronie_php' 'apache2'
 
 echo -e "${color}
 	  ==========================================
-	   Open PHP on  http://localhost:9977
+	   Open PHP on  http://localhost:9978
 	  ==========================================
-	   Open PHPmyadmin on http://localhost:7722
+	   Open PHPmyadmin on http://localhost:7723
 	  ------------------------------------------
 	   PHPmyadmin Credentials:
 	   		Username -> root
